@@ -1,0 +1,64 @@
+<mat-sidenav-container fullscreen>
+    <mat-sidenav mode="side" #sidenav opened position="start">
+      <div id="sidebar">
+        <div class="nav-side-menu navbar-fixed-top">
+          <div class="brand">
+          </div>
+  
+          <div>
+            <span style="margin-left: 70px;">
+              <img class="sidenav-user-image rounded-circle" src="assets/img/avatars/default.jpg" alt="hugenerd"
+                width="80" height="80">
+            </span>
+          </div>
+          <div style="margin-left: 50px;">
+            <!-- <h4 class="sidenav-user-name" *ngIf="compte">{{utilisateur}}</h4> -->
+            <!-- <h5 style="color: aliceblue;">{{username}} -->
+              <a style="color: aliceblue;"  mat-icon-button>
+                <mat-icon>exit_to_app</mat-icon>
+              </a>
+            <!-- </h5> -->
+          </div>
+  
+          <!-- Separator with title -->
+          <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+            <small>MENU</small>
+          </li>
+          <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
+              <li class="nav-item">
+                <a href="/gestion-utilisateur/comptes/liste-compte">
+                  <i class="fa fa-users fa-lg"></i> Comptes<span class="arrow"></span></a>
+              </li>
+  
+              <li class="nav-item">
+                <a href="/gestion-utilisateur/roles/liste-role">
+                  <i class="fa fa-users fa-lg"></i>Roles <span class="arrow"></span></a>
+              </li>
+  
+              <li class="nav-item">
+                <a href="/gestion-utilisateur/privileges/liste-privilege">
+                  <i class="fa fa-users fa-lg"></i>Privileges <span class="arrow"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar class="navbar navbar-dark bg-primary" style="height: 50px;">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <!-- IPMS -->
+        <span class="toolbar-spacer"></span>
+  
+        <img class="sidenav-user-image rounded-circle" src="assets/img/avatars/default.jpg" alt="hugenerd" width="40"
+          height="40">
+        <!-- <h5 style="color: aliceblue;">{{username}}</h5> -->
+      </mat-toolbar>
+      <div class="main-content">
+
+      </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

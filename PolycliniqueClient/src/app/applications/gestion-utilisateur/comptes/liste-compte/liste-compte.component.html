@@ -1,0 +1,118 @@
+<!-- <app-template></app-template> -->
+<h5 class="card-header" style="background-color:rgb(32, 112, 218);color: rgb(241, 235, 235);">
+  <fury-page-layout-header>
+    <fury-breadcrumbs [@fadeInRight] [crumbs]="['Gestion Compte']"></fury-breadcrumbs>
+  </fury-page-layout-header>
+</h5>
+<div class="card-body" style="margin-left: 230px;" *ngIf="compte">
+  <fury-page-layout mode="card">
+    <fury-page-layout-content [@fadeInUp]>
+      <fury-list name="Compte utilisateur" [columns]="columns" (filterChange)="onFilterChange($event)">
+        <div class="actions">
+          <!-- class="btn btn-info" -->
+          <button style="margin: 2px;" class="create" (click)="createCompte()" type="button" mat-mini-fab
+            color="">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button matTooltip="Désactiver Compte(s)" style="margin: 2px;" [disabled]="selection.isEmpty()"
+            (click)="activeDesactiveCompte(null, 'desactiver')" type="button" mat-mini-fab color="warn">
+            <mat-icon>clear</mat-icon>
+            <!-- <span>Desactiver</span> -->
+          </button>
+          <button matTooltip="Activer Compte(s)" style="margin: 2px;" [disabled]="selection.isEmpty()"
+            (click)="activeDesactiveCompte(null, 'activer')" type="button" mat-mini-fab color="accent">
+            <mat-icon>check_circle_outline</mat-icon>
+          </button>
+        </div>
+        <!-- fullName Column -->
+        <table [dataSource]="dataSource" mat-table matSort>
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="checkbox">
+            <th *matHeaderCellDef class="actions-cell" mat-header-cell>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td *matCellDef="let row" class="actions-cell" mat-cell>
+              <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container *ngFor="let column of columns">
+            <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+              <td *matCellDef="let row" mat-cell>
+                <p *ngIf="row.agent && column.name === 'Matricule'">
+                  {{ row.agent.matricule }}
+                </p>
+                <p *ngIf="row.agent && column.name === 'Nom'">
+                  {{ row.agent.nom }}
+                </p>
+                <p *ngIf="row.agent && column.name === 'Prenom'">
+                  {{ row.agent.prenom }}
+                </p>
+                <p *ngIf="row.agent && column.name === 'Telephone'">
+                  {{ row.agent.telephone }}
+                </p>
+                <p *ngIf="row.agent && column.name === 'Adresse'">
+                  {{ row.agent.adresse }}
+                </p>
+                <p *ngIf="row.agent && row.agent.uniteOrganisationnelle && column.name === 'Direction'">
+                  {{ row.agent.uniteOrganisationnelle.nom }}
+                </p>
+                <p *ngIf="row.agent && column.name === 'Email'">
+                  {{ row.agent.email }}
+                </p>
+                <p *ngIf="column.name !== 'Prenom' && column.name !== 'Nom'  && column.name !== 'Email'">
+                  {{ row[column.property] }}
+                </p>
+                <!-- <p *ngIf="column.name === 'Etat'">
+                  <span *ngIf="row[column.property] === true" class="badge badge-success">Active</span>
+                  <span *ngIf="row[column.property] === false" class="badge badge-danger">Desactive</span>
+              </p> -->
+              </td>
+            </ng-container>
+          </ng-container>
+
+          <!-- actions Column -->
+          <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+            <td *matCellDef="let row" class="actions-cell" mat-cell>
+              <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                <button (click)="updateCompte(row)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Modifier</span>
+                </button>
+                <button (click)="deleteCompte(row)" mat-menu-item>
+                  <mat-icon>delete_sweep</mat-icon>
+                  <span>Supprimer</span>
+                </button>
+                <button *ngIf="row.enabled === true" (click)="activeDesactiveCompte(row)" mat-menu-item>
+                  <mat-icon>clear</mat-icon>
+                  <span>Desactiver</span>
+                </button>
+                <button *ngIf="row.enabled === false" (click)="activeDesactiveCompte(row)" mat-menu-item>
+                  <mat-icon>check_circle_outline</mat-icon>
+                  <span>Activer</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr (click)="updateCompte(row)" *matRowDef="let row; columns: visibleColumns;"
+            class="clickable route-animations-elements" mat-row>
+          </tr>
+        </table>
+        <mat-paginator class="paginator" [pageSize]="pageSize" style="text-align: center;"></mat-paginator>
+      </fury-list>
+    </fury-page-layout-content>
+  </fury-page-layout>
+</div>

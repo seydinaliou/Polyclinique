@@ -1,0 +1,82 @@
+<div class="navbar navbar-dark bg-primary" style="height: 50px;">
+</div>
+<div class="row flex-nowrap" id="body-row">
+  <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+    <div>
+      <span style="margin-left: 50px;">
+        <img src="../../../../assets/img/20210802_090026.jpg" alt="hugenerd" width="100" height="100"
+          class="rounded-circle">
+      </span>
+    </div>
+    <div>
+      <span style="margin-left: 40px; text-align: center;" class="text-white">User connecté</span>
+    </div>
+    <!-- Separator with title -->
+    <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+      <small>MENU</small>
+    </li>
+    <ul class="list-group" id="menu">
+      <a href="#" class="bg-dark list-group-item">
+        <div class="d-flex w-100 justify-content-start align-items-center text-white">
+          <span class="fa fa-dashboard fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+        </div>
+      </a>
+
+      <a href="#submenu2" data-bs-toggle="collapse" aria-expanded="false"
+        class="bg-dark list-group-item list-group-item-action nav-link px-3">
+        <div class="d-flex w-100 justify-content-start align-items-center text-white">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Administration</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu2' class="collapse show nav flex-column ms-1" data-bs-parent="#menu">
+        <a href="/gestion-utilisateur/comptes/liste-compte" class="nav-link px-4">
+          <span class="menu-collapsed">Comptes</span>
+        </a>
+        <a href="/gestion-utilisateur/ressources/liste-ressource" class="nav-link px-4">
+          <span class="menu-collapsed">Ressources</span>
+        </a>
+        <a href="/gestion-utilisateur/privileges/liste-privilege" class="nav-link px-4">
+          <span class="menu-collapsed">Privileges</span>
+        </a>
+        <a href="/gestion-utilisateur/roles/liste-role" class="nav-link px-4">
+          <span class="d-none d-sm-grid">Roles</span>
+        </a>
+      </div>
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-calendar fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Calendar</span>
+        </div>
+      </a>
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-envelope-o fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Messages
+            <span class="badge badge-pill badge-primary ml-2">5</span>
+          </span>
+        </div>
+      </a>
+      <!-- Separator without title -->
+      <!-- <li class="list-group-item sidebar-separator menu-collapsed"></li> -->
+      <!-- /END Separator -->
+
+      <a href="#top" data-toggle="sidebar-colapse"
+        class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
+          <span id="collapse-text" class="menu-collapsed">Collapse</span>
+        </div>
+      </a>
+
+    </ul>
+    <hr>
+  </div>
+</div>
+
+
+

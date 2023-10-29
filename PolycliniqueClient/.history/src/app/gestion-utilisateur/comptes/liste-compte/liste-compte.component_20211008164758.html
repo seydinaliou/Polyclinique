@@ -1,0 +1,203 @@
+<div class="navbar navbar-dark bg-primary" style="height: 50px;">
+</div>
+<div class="row flex-nowrap" id="body-row">
+  <div id="sidebar-container" class="sidebar-expanded d-none d-md-block">
+    <div>
+      <span style="margin-left: 50px;">
+        <img src="../../../../assets/img/20210802_090026.jpg" alt="hugenerd" width="100" height="100"
+          class="rounded-circle">
+      </span>
+    </div>
+    <div>
+      <span style="margin-left: 40px; text-align: center;" class="text-white">User connecté</span>
+    </div>
+    <!-- Separator with title -->
+    <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+      <small>MENU</small>
+    </li>
+    <ul class="list-group" id="menu">
+      <a href="#" class="bg-dark list-group-item">
+        <div class="d-flex w-100 justify-content-start align-items-center text-white">
+          <span class="fa fa-dashboard fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+        </div>
+      </a>
+
+      <a href="#submenu2" data-bs-toggle="collapse" aria-expanded="false"
+        class="bg-dark list-group-item list-group-item-action nav-link px-3">
+        <div class="d-flex w-100 justify-content-start align-items-center text-white">
+          <span class="fa fa-user fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Administration</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu2' class="collapse show nav flex-column ms-1" data-bs-parent="#menu">
+        <a href="/gestion-utilisateur/comptes/liste-compte" class="nav-link px-4">
+          <span class="menu-collapsed">Comptes</span>
+        </a>
+        <a href="/gestion-utilisateur/ressources/liste-ressource" class="nav-link px-4">
+          <span class="menu-collapsed">Ressources</span>
+        </a>
+        <a href="/gestion-utilisateur/privileges/liste-privilege" class="nav-link px-4">
+          <span class="menu-collapsed">Privileges</span>
+        </a>
+        <a href="/gestion-utilisateur/roles/liste-role" class="nav-link px-4">
+          <span class="d-none d-sm-grid">Roles</span>
+        </a>
+      </div>
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-calendar fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Calendar</span>
+        </div>
+      </a>
+
+      <a href="#" class="bg-dark list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-envelope-o fa-fw mr-3"></span>
+          <span class="ms-1 d-none d-sm-inline">Messages
+            <span class="badge badge-pill badge-primary ml-2">5</span>
+          </span>
+        </div>
+      </a>
+      <!-- Separator without title -->
+      <!-- <li class="list-group-item sidebar-separator menu-collapsed"></li> -->
+      <!-- /END Separator -->
+
+      <a href="#top" data-toggle="sidebar-colapse"
+        class="bg-dark list-group-item list-group-item-action d-flex align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
+          <span id="collapse-text" class="menu-collapsed">Collapse</span>
+        </div>
+      </a>
+
+    </ul>
+    <hr>
+  </div>
+
+  <div class="col p-0" style="margin-left: 18%;">    
+    <h5 class="card-header">
+        <fury-page-layout-header>
+          <fury-breadcrumbs [@fadeInRight] [crumbs]="['Gestion Compte']"></fury-breadcrumbs>
+        </fury-page-layout-header>
+    </h5>
+    <div class="card-body">
+        <fury-page-layout mode="card">
+          <fury-page-layout-content [@fadeInUp]>
+            <fury-list name="Compte utilisateur" [columns]="columns" (filterChange)="onFilterChange($event)">
+              <div class="actions">
+                <!-- class="btn btn-info" -->
+                <button style="margin: 2px;" class="create" (click)="createCompte()" type="button" mat-mini-fab
+                  color="">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button matTooltip="Désactiver Compte(s)" style="margin: 2px;" [disabled]="selection.isEmpty()"
+                  (click)="activeDesactiveCompte(null, 'desactiver')" type="button" mat-mini-fab color="warn">
+                  <mat-icon>clear</mat-icon>
+                  <!-- <span>Desactiver</span> -->
+                </button>
+                <button matTooltip="Activer Compte(s)" style="margin: 2px;" [disabled]="selection.isEmpty()"
+                  (click)="activeDesactiveCompte(null, 'activer')" type="button" mat-mini-fab color="accent">
+                  <mat-icon>check_circle_outline</mat-icon>
+                </button>
+              </div>
+              <!-- fullName Column -->
+              <table [dataSource]="dataSource" mat-table matSort class="table-responsive">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="checkbox">
+                  <th *matHeaderCellDef class="actions-cell" mat-header-cell>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td *matCellDef="let row" class="actions-cell" mat-cell>
+                    <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngFor="let column of columns">
+                  <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                    <td *matCellDef="let row" mat-cell>
+                      <p *ngIf="row.agentIpms && column.name === 'Matricule'">
+                        {{ row.agentIpms.matricule }}
+                      </p>
+                      <p *ngIf="row.agentIpms && column.name === 'Nom'">
+                        {{ row.agentIpms.nom }}
+                      </p>
+                      <p *ngIf="row.agentIpms && column.name === 'Prenom'">
+                        {{ row.agentIpms.prenom }}
+                      </p>
+                      <p *ngIf="row.agentIpms && column.name === 'Telephone'">
+                        {{ row.agentIpms.telephone }}
+                      </p>
+                      <p *ngIf="row.agentIpms && column.name === 'Adresse'">
+                        {{ row.agentIpms.adresse }}
+                      </p>
+                      <p *ngIf="row.agentIpms && row.agentIpms.uniteOrganisationnelle && column.name === 'Direction'">
+                        {{ row.agentIpms.uniteOrganisationnelle.nom }}
+                      </p>
+                      <p *ngIf="row.agentIpms && column.name === 'Email'">
+                        {{ row.agentIpms.email }}
+                      </p>
+                      <p *ngIf="column.name !== 'Prenom' && column.name !== 'Nom'  && column.name !== 'Email'">
+                        {{ row[column.property] }}
+                      </p>
+                      <!-- <p *ngIf="column.name === 'Etat'">
+                            <span *ngIf="row[column.property] === true" class="badge badge-success">Active</span>
+                            <span *ngIf="row[column.property] === false" class="badge badge-danger">Desactive</span>
+                        </p> -->
+
+                    </td>
+                  </ng-container>
+                </ng-container>
+
+                <!-- actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+                  <td *matCellDef="let row" class="actions-cell" mat-cell>
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                      (click)="$event.stopPropagation()">
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
+                    <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                      <button (click)="updateCompte(row)" mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Modifier</span>
+                      </button>
+                      <button (click)="deleteCompte(row)" mat-menu-item>
+                        <mat-icon>delete_sweep</mat-icon>
+                        <span>Supprimer</span>
+                      </button>
+                      <button *ngIf="row.enabled === true" (click)="activeDesactiveCompte(row)" mat-menu-item>
+                        <mat-icon>clear</mat-icon>
+                        <span>Desactiver</span>
+                      </button>
+                      <button *ngIf="row.enabled === false" (click)="activeDesactiveCompte(row)" mat-menu-item>
+                        <mat-icon>check_circle_outline</mat-icon>
+                        <span>Activer</span>
+                      </button>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: visibleColumns;" class="clickable route-animations-elements" mat-row>
+                </tr>
+              </table>
+              <mat-paginator class="paginator" [pageSize]="pageSize" style="align-self: center;"></mat-paginator>
+            </fury-list>
+          </fury-page-layout-content>
+        </fury-page-layout>
+      </div>
+    
+  </div>
+</div>
+
+
+

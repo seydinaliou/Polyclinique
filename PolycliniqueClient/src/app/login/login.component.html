@@ -1,0 +1,67 @@
+<section class="vh-100" style="background-color: #508bfc;">
+	<div class="container py-5 h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				<div class="card shadow-2-strong" style="border-radius: 1rem;">
+					<div class="card-body p-5 text-center">
+						<div class="col-lg-12 login-key">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<div class="col-lg-12 login-title">
+							SIGN IN
+						</div>
+						<div class="page background-pattern" fxLayout="column" fxLayoutAlign="center center">
+							<div class="login_container">
+								<div class="card border-radius elevation card_login" fxlayoutalign="center center">
+									<div class="card_login" fxlayoutalign="center center">
+										<div class="header padding background-primary" fxLayout="column"
+											fxLayoutAlign="center center">
+										</div>
+										<div class="padding" fxLayout="column" fxLayoutGap="16px" [formGroup]="form">
+											<div fxFlex="auto" fxLayout="column" class="container">
+												<mat-form-field fxFlex="grow">
+													<!-- <mat-label>E-Mail</mat-label> -->
+													<input matInput required formControlName="username" type="email" placeholder="Email" (keyup)="handleKeyUp($event)">
+													<!-- <mat-icon matPrefix>email</mat-icon> -->
+													<mat-error *ngIf="form.get('username').hasError('required')"> Vous
+														devez renseigner votre e-mail pour vous connecter!</mat-error>
+													<mat-icon matSuffix *ngIf="!form.get('username')?.errors"
+														color="success">check_circle</mat-icon>
+												</mat-form-field>
+												
+												<mat-form-field fxFlex="grow">
+													<!-- <mat-label>Mot de passe</mat-label> -->
+													
+													<input matInput [type]="inputType" formControlName="password" placeholder="Password" (keyup)="handleKeyUp($event)">
+													<!-- <mat-icon matPrefix>vpn_key</mat-icon> -->
+													<button type="button" mat-icon-button matSuffix
+														(click)="toggleVisibility()" matTooltip="Toggle Visibility">
+														<mat-icon *ngIf="visible">visibility</mat-icon>
+														<mat-icon *ngIf="!visible">visibility_off</mat-icon>
+													</button>
+													<mat-hint></mat-hint>
+													<mat-error *ngIf="form.get('password').hasError('required')"> Vous
+														devez renseigner votre mot de passe pour vous connecter!
+													</mat-error>
+												</mat-form-field>
+											</div>
+											<button mat-button color="primary"
+												mat-raised-button (click)="login()">
+												Se connecter
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<hr class="my-4">
+						<div fxLayout="row" fxLayoutAlign="space-between center">
+							<a class="caption" [routerLink]="['/forgot-password']">Mot de passe oublié ?</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <script type="text/javascript">
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle('active');
+    }
+  </script>
+</head>
+
+<body>
+  <div id="sidebar">
+    <div class="nav-side-menu navbar-fixed-top">
+      <div class="brand">GESTION DOSSIERS</div>
+      <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      <div class="menu-list">
+        <ul id="menu-content" class="menu-content collapse out">
+          <li data-toggle="collapse" data-target="#stact" class="collapsed">
+            <a><i class="fa fa-dashboard fa-lg"></i> Tableau de bord<span class="arrow"></span></a>
+          </li>
+          <ul class="sub-menu collapse" id="stact">
+            <li><a routerLink="#">Nombre de x/y</a></li>
+          </ul>
+          <li data-toggle="collapse" data-target="#dossiers" class="collapsed">
+            <a><i class="glyphicon glyphicon-home fa-lg"></i> Gestion dossiers <span class="arrow"></span></a>
+          </li>
+          <ul class="sub-menu collapse" id="dossiers">
+            <li><a routerLink="" routerLinkActive="active">Liste dossier</a></li>
+            <li><a routerLink="" routerLinkActive="active">Liste d'attente</a></li>
+            <li><a routerLink="" routerLinkActive="active">Prestation</a></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-left:220px">
+    <!-- <router-outlet></router-outlet> -->
+    <!-- <app-footer></app-footer> -->
+  </div>
+</body>
+
+</html>
